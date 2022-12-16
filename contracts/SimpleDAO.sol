@@ -57,7 +57,7 @@ contract SimplDAO {
     function getProposal(uint _proposalId) public view returns(Proposal){
         assert()
         Proposal memory proposal = ProposalData[_proposalId];
-        return proposal.excecuted;
+        return proposal;
     }
  
 }
