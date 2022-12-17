@@ -1,7 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^8.0.0;
 
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
+
 contract SimplDAO {
+    using Counters for Counters.Counter;
     struct Proposal {
         uint ProposalID;
         string proposalTitle;
@@ -12,9 +17,14 @@ contract SimplDAO {
         uint256 totalVotes;
         bool excecuted;
     }
-    uint public proposalCount = 0;
+
+    Counters.Counter public proposalCount;
+
     mapping(uint => Proposal) public ProposalData;
     mapping(Proposal => mapping(uint256 => address)) public votersData;
+
+    event proposalCreated(uint _id, string Title, address createdBy);
+    
 
     enum voteOption{yes,no}
 
@@ -22,12 +32,13 @@ contract SimplDAO {
         string _Title,
         string _Description
     ) public {
-        proposalCount++;
         Proposal memory proposal = ProposalData[proposalCount];
-        proposal.ProposalID = proposalCount;
+        proposal.ProposalID = proposalCount.current();
         proposal.proposalTitle = _Title;
         proposal.proposalDescription = _Description;
         proposal.createdBy = msg.sender;
+        proposalCount.increment();
+        emit proposalCreated(ProposalID, proposalTitle, msg.sender);
     }
 
     function voteProposal(uint _proposalId, voteOption vote) public {
