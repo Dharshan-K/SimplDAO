@@ -28,6 +28,10 @@ contract SimplDAO {
 
     enum voteOption{yes,no}
 
+    function createToken(string _name, string _symbol) private{
+        
+    }
+
     function createProposal(
         string _Title,
         string _Description
