@@ -7,6 +7,12 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 
 contract SimplDAO {
     using Counters for Counters.Counter;
+    
+    struct NFTData{
+        string _name;
+        string _symbol;
+    }
+
     struct Proposal {
         uint ProposalID;
         string proposalTitle;
@@ -22,6 +28,7 @@ contract SimplDAO {
 
     mapping(uint => Proposal) public ProposalData;
     mapping(Proposal => mapping(uint256 => address)) public votersData;
+    mapping (uint=>NFTData) NFTMap;
 
     event proposalCreated(uint _id, string Title, address createdBy);
     
