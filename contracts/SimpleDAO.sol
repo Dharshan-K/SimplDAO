@@ -5,13 +5,9 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-contract SimplDAO {
+contract SimplDAO is SimplDAONFT{
     using Counters for Counters.Counter;
     
-    struct NFTData{
-        string _name;
-        string _symbol;
-    }
 
     struct Proposal {
         uint ProposalID;
@@ -22,6 +18,13 @@ contract SimplDAO {
         uint256 noVotes;
         uint256 totalVotes;
         bool excecuted;
+    }
+
+    struct NFTData{
+        string nftName;
+        string nftSymbol;
+        address nftAddress;
+        address nftOwner;
     }
 
     Counters.Counter public proposalCount;
@@ -35,6 +38,10 @@ contract SimplDAO {
 
     enum voteOption{yes,no}
 
+    function deploy(string memory _name, string memory _name) public return(address newContract){
+
+    }
+
     function createToken(string _name, string _symbol) private{
         
     }
@@ -47,7 +54,7 @@ contract SimplDAO {
         proposal.ProposalID = proposalCount.current();
         proposal.proposalTitle = _Title;
         proposal.proposalDescription = _Description;
-        proposal.createdBy = msg.sender;
+        proposal.createdBy = msg.sender();
         proposalCount.increment();
         emit proposalCreated(ProposalID, proposalTitle, msg.sender);
     }
@@ -82,4 +89,38 @@ contract SimplDAO {
         return proposal;
     }
  
+}
+
+
+contract SimplDAONFT is ERC721{
+
+    using Counters for Counters.Counter;
+    Counters.Counter public _nftCount;
+    Counters.Counter public _nftOwnerCount;
+
+    mapping(uint256=>address) public nftHolders;
+
+    mapping(nftHolders=>uint256) public nftOwned;
+
+    constructor(string memory name, string memory symbol) ERC721(name,symbol){}
+
+    function mint(address _user,uint256 supply) returns(uint256){
+        for(uint i=1;i<=supply;i++){
+            _mint(_user,_nftCount.current());
+            _approve(_user,_nftCount.current());
+            _nftCount.increment();
+        }
+
+    }
+
+    function transferNFT(address _user, uint256 _tokenId) public {
+        _transfer(_user,_tokenId)
+    }
+
+
+
+
+
+
+
 }
