@@ -4,6 +4,7 @@ pragma solidity ^8.0.0;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
+import "hardhat/console.sol";
 
 contract SimplDAO is SimplDAONFT{
     using Counters for Counters.Counter;
@@ -42,7 +43,8 @@ contract SimplDAO is SimplDAONFT{
 
     }
 
-    function createToken(string _name, string _symbol) private{
+    function createToken(string _name, string _symbol) public{
+
         
     }
 
@@ -97,24 +99,34 @@ contract SimplDAONFT is ERC721{
     using Counters for Counters.Counter;
     Counters.Counter public _nftCount;
     Counters.Counter public _nftOwnerCount;
+    address public owner;
 
-    mapping(uint256=>address) public nftHolders;
+    struct MemberData{
+        address _daoMember;
+        uint256 nftCount;
+    }
 
-    mapping(nftHolders=>uint256) public nftOwned;
+    mapping(uint256=>MemberData) public nftHolders;
 
-    constructor(string memory name, string memory symbol) ERC721(name,symbol){}
+    event NFTMinted(address _owner, uint256 _tokenId);
 
-    function mint(address _user,uint256 supply) returns(uint256){
+
+    constructor(string memory name, string memory symbol) ERC721(name,symbol){
+        owner = msg.sender;
+    }
+
+    function mint(address _user,uint256 supply) public external returns(uint256){
         for(uint i=1;i<=supply;i++){
             _mint(_user,_nftCount.current());
+            emit NFTMinted(_user, _nftCount.current());
             _approve(_user,_nftCount.current());
             _nftCount.increment();
         }
 
     }
 
-    function transferNFT(address _user, uint256 _tokenId) public {
-        _transfer(_user,_tokenId)
+    function transferNFT(address _user, uint256 _tokenId) public external {
+        _transfer(_user,_tokenId);        
     }
 
 
