@@ -1,23 +1,18 @@
-/ SPDX-License-Identifier: MIT
-pragma solidity ^8.6.0;
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
-import "@openzeppelin/contracts/utils/Counters.sol";
+// SPDX-License-Identifier:MIT
+pragma solidity ^0.8.9;
+
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 
-contract SimplDAONFT is ERC721Storage{
-    constructor() ERC721Storage("SimplDAO","SDAO"){
+contract SimplNFT is ERC20{
+    address public immutable owner;
 
+    constructor() ERC20("SimplDAO","SDAO"){
+        owner = msg.sender;
     }
 
-    using Counters for Counters.Counter;
-    Counters.Counter private _itemId;
-
-    function createNFT(address member, string memory tokenURI) public return(uint){
-        uint _newItem = _itemId.current();
-        _mint(member, tokenURI);
-        _setTokenURI(_newItem, tokenURI);
-        _itemId.increment();
-        return _newItem;
+    function mint(uint256 supply) public{
+        _mint(msg.sender,supply);
     }
+
 }

@@ -1,13 +1,14 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^8.0.0;
+pragma solidity ^0.8.9;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "hardhat/console.sol";
 
-contract SimplDAO is SimplDAONFT{
+
+contract SimplDAO {
     using Counters for Counters.Counter;
+    address _owner;
     
 
     struct Proposal {
@@ -21,59 +22,50 @@ contract SimplDAO is SimplDAONFT{
         bool excecuted;
     }
 
-    struct NFTData{
-        string nftName;
-        string nftSymbol;
-        address nftAddress;
-        address nftOwner;
-    }
-
-    Counters.Counter public proposalCount;
+    uint public proposalCount;
 
     mapping(uint => Proposal) public ProposalData;
-    mapping(Proposal => mapping(uint256 => address)) public votersData;
-    mapping (uint=>NFTData) NFTMap;
 
     event proposalCreated(uint _id, string Title, address createdBy);
     
 
     enum voteOption{yes,no}
 
-    function deploy(string memory _name, string memory _name) public return(address newContract){
-
+    constructor(){
+        _owner = msg.sender;
     }
 
-    function createToken(string _name, string _symbol) public{
-
-        
-    }
 
     function createProposal(
-        string _Title,
-        string _Description
+        string memory _Title,
+        string memory _Description
     ) public {
-        Proposal memory proposal = ProposalData[proposalCount];
-        proposal.ProposalID = proposalCount.current();
+        Proposal storage proposal = ProposalData[proposalCount];
+        proposal.ProposalID = proposalCount;
         proposal.proposalTitle = _Title;
         proposal.proposalDescription = _Description;
-        proposal.createdBy = msg.sender();
-        proposalCount.increment();
-        emit proposalCreated(ProposalID, proposalTitle, msg.sender);
+        proposal.createdBy = msg.sender;
+        proposalCount++;
+        emit proposalCreated(proposal.ProposalID, proposal.proposalTitle, msg.sender);
     }
 
-    function voteProposal(uint _proposalId, voteOption vote) public {
+    function voteProposal(uint _proposalId, voteOption vote,address nftAddress) public view {
         require(_proposalId>0, "Proposal doesn't exist");
-        Proposal memory proposal = ProposalData[_proposalId]
-        if (vote==voteOption.yes){
-            proposal.yesVotes++;
-        }else if(vote == voteOption.no){
-            proposal.noVotes++;
-        }        
+        uint voteCount = IERC20(nftAddress).balanceOf(msg.sender);
+        Proposal memory proposal = ProposalData[_proposalId];
+        for(uint i=0;i<voteCount;i++){
+            if (vote==voteOption.yes){
+                proposal.yesVotes++;
+            }else if(vote == voteOption.no){
+                proposal.noVotes++;
+        }  
+        }      
     }
 
-    function exceuteProposal(uint _proposalId) public {
+    function exceuteProposal(uint _proposalId) public view{
         require(_proposalId>0, "Proposal doesn't exist");
-        Proposal memory proposal = ProposalData[_proposalId]
+        Proposal memory proposal = ProposalData[_proposalId];
+        require(msg.sender==proposal.createdBy, "the owner only can excecute the proposal");
         if (proposal.yesVotes>proposal.noVotes){
             proposal.excecuted = true;
         }else if(proposal.yesVotes<proposal.noVotes){
@@ -85,8 +77,7 @@ contract SimplDAO is SimplDAONFT{
         return proposalCount;
     }
 
-    function getProposal(uint _proposalId) public view returns(Proposal){
-        assert()
+    function getProposal(uint _proposalId) public view returns(Proposal memory){
         Proposal memory proposal = ProposalData[_proposalId];
         return proposal;
     }
@@ -94,45 +85,4 @@ contract SimplDAO is SimplDAONFT{
 }
 
 
-contract SimplDAONFT is ERC721{
 
-    using Counters for Counters.Counter;
-    Counters.Counter public _nftCount;
-    Counters.Counter public _nftOwnerCount;
-    address public owner;
-
-    struct MemberData{
-        address _daoMember;
-        uint256 nftCount;
-    }
-
-    mapping(uint256=>MemberData) public nftHolders;
-
-    event NFTMinted(address _owner, uint256 _tokenId);
-
-
-    constructor(string memory name, string memory symbol) ERC721(name,symbol){
-        owner = msg.sender;
-    }
-
-    function mint(address _user,uint256 supply) public external returns(uint256){
-        for(uint i=1;i<=supply;i++){
-            _mint(_user,_nftCount.current());
-            emit NFTMinted(_user, _nftCount.current());
-            _approve(_user,_nftCount.current());
-            _nftCount.increment();
-        }
-
-    }
-
-    function transferNFT(address _user, uint256 _tokenId) public external {
-        _transfer(_user,_tokenId);        
-    }
-
-
-
-
-
-
-
-}
