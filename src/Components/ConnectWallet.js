@@ -2,6 +2,7 @@
 
 import { ethers } from "ethers";
 import { useState, useEffect } from "react";
+
 // import { abi, nftABI, contractAddress, NFTcontractAddress } from "../constants";
 
 export default function ConnectWallet() {
@@ -57,8 +58,8 @@ export default function ConnectWallet() {
           <p>Connected</p>
         )}
       </div>
-      <h1>Hello world</h1>
-      <button onClick={connectWallet}>Connect Wallet</button>
+      {/* <h1>Hello world</h1>
+      <button onClick={connectWallet}>Connect Wallet</button> */}
     </div>
   );
 }

@@ -1,10 +1,9 @@
 /** @format */
-
 const { network, deployments, getNamedAccounts, ethers } = require("hardhat");
-const ABI_FILE = "../constants/abi.json";
-const CONTRACT_ADDRESS_FILE = "../constants/contractAddress.json";
-const NFT_ABI_FILE = "../constants/nftabi.json";
-const NFT_CONTRACT_ADDRESS_FILE = "../constants/NFTcontractAddress.json";
+const ABI_FILE = "./src/constants/abi.json";
+const CONTRACT_ADDRESS_FILE = "./src/constants/contractAddress.json";
+const NFT_ABI_FILE = "./src/constants/nftabi.json";
+const NFT_CONTRACT_ADDRESS_FILE = "./src/constants/NFTcontractAddress.json";
 const fs = require("fs");
 require("dotenv").config();
 
