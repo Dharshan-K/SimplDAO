@@ -7,6 +7,7 @@ import {
 } from "../constants/index";
 import { ethers, Contract } from "ethers";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 export default function ProposalList() {
   const [proposalList, setProposalList] = useState([]);
   const [proposalCount, setProposalCount] = useState(0);
@@ -50,8 +51,29 @@ export default function ProposalList() {
 
   return (
     <div>
-      <div>total No. of Proposals: {proposalCount}</div>
-      <button onClick={getProposals}>Get proposals</button>
+      <div className="flex flex-row">
+        <ul className="mr-6">
+          <span className="bg-green-400 text-white font-bold  px-3 py-2 rounded">
+            Total No. of Proposals: {proposalCount}
+          </span>
+        </ul>
+        <ul className="mr-6">
+          <Link
+            className="bg-green-400 hover:bg-green-500 text-white font-bold rounded px-4 py-2"
+            to={`createProposal`}
+          >
+            Create Proposal
+          </Link>
+        </ul>
+        <ul className="mr-6">
+          <button
+            className="bg-green-400 hover:bg-green-700 text-white font-bold px-4 py-2 rounded"
+            onClick={getProposals}
+          >
+            Refresh
+          </button>
+        </ul>
+      </div>
       {proposalList.map((p, index) => (
         <div className="bg-orange-600 ml-2">
           <ul key={index}>
@@ -68,6 +90,7 @@ export default function ProposalList() {
               )}
             </li>
           </ul>
+          <Link>Vote</Link>
         </div>
       ))}
     </div>

@@ -52,6 +52,7 @@ contract SimplDAO {
     function voteProposal(uint _proposalId, voteOption vote,address nftAddress) public view {
         require(_proposalId>0, "Proposal doesn't exist");
         uint voteCount = IERC20(nftAddress).balanceOf(msg.sender);
+        require(voteCount > 0, "The user doesnt's own any NFT");
         Proposal memory proposal = ProposalData[_proposalId];
         for(uint i=0;i<voteCount;i++){
             if (vote==voteOption.yes){
