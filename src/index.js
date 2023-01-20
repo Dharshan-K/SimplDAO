@@ -7,11 +7,12 @@ import App from "./Components/App";
 import CreateProposal from "./Components/proposal";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import VoteProposal from "./Components/voteProposal";
 
 const router = createBrowserRouter([
   { path: "/", element: <App /> },
   { path: "createProposal", element: <CreateProposal /> },
-  // {path:"createProposal"}
+  { path: "voteProposal/:id", element: <VoteProposal /> },
 ]);
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

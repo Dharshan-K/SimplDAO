@@ -49,23 +49,31 @@ contract SimplDAO {
         emit proposalCreated(proposal.ProposalID, proposal.proposalTitle, msg.sender);
     }
 
-    function voteProposal(uint _proposalId, voteOption vote,address nftAddress) public view {
-        require(_proposalId>0, "Proposal doesn't exist");
-        uint voteCount = IERC20(nftAddress).balanceOf(msg.sender);
+    function voteProposal(uint _proposalId, voteOption vote,address nftAddress) public {
+        require(_proposalId>=0, "Proposal doesn't exist");
+        uint256 temp=0;        
+        console.log("voting begins");
+        Proposal storage proposal = ProposalData[_proposalId];
+        uint256 voteCount = getBalance(nftAddress);
         require(voteCount > 0, "The user doesnt's own any NFT");
-        Proposal memory proposal = ProposalData[_proposalId];
-        for(uint i=0;i<voteCount;i++){
-            if (vote==voteOption.yes){
-                proposal.yesVotes++;
-            }else if(vote == voteOption.no){
-                proposal.noVotes++;
-        }  
-        }      
+        if (vote==voteOption.yes){
+            temp = proposal.yesVotes+voteCount;
+            proposal.yesVotes=temp;
+            console.log("voted for yes");
+            console.log(proposal.yesVotes);
+        }else if(vote == voteOption.no){
+            temp = proposal.noVotes+voteCount;
+            proposal.noVotes=temp;
+            console.log("voted for no");
+            console.log(proposal.noVotes);
+        } 
+              
     }
 
-    function exceuteProposal(uint _proposalId) public view{
+    function exceuteProposal(uint _proposalId) public {
         require(_proposalId>0, "Proposal doesn't exist");
-        Proposal memory proposal = ProposalData[_proposalId];
+        Proposal storage proposal = ProposalData[_proposalId];
+        
         require(msg.sender==proposal.createdBy, "the owner only can excecute the proposal");
         if (proposal.yesVotes>proposal.noVotes){
             proposal.excecuted = true;
@@ -82,6 +90,17 @@ contract SimplDAO {
         Proposal memory proposal = ProposalData[_proposalId];
         return proposal;
     }
+
+    function getBalance(address nftAddress) public view returns(uint){
+        return IERC20(nftAddress).balanceOf(msg.sender)/10**18;
+    }
+
+    // function increaseYes(uint _proposalId,address nftAddress) public view returns(uint){
+    //     Proposal memory proposal = ProposalData[_proposalId];
+    //     uint voteCount = proposal.yesVotes + (IERC20(nftAddress).balanceOf(msg.sender)/10**18);
+    //     proposal.yesVotes= voteCount;
+    //     return proposal.yesVotes;
+    // }
  
 }
 

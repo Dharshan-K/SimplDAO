@@ -12,7 +12,7 @@ contract SimplNFT is ERC20{
     }
 
     function mint(uint256 supply) public{
-        _mint(msg.sender,supply);
+        _mint(msg.sender,supply* 10**18);
     }
 
 }

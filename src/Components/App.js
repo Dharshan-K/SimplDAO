@@ -5,6 +5,7 @@ import ConnectWallet from "./ConnectWallet";
 import ProposalList from "./proposalList";
 import { Link } from "react-router-dom";
 import VoteProposal from "./voteProposal";
+import MintNFT from "./mintNFT";
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
       <div className="">
         <ProposalList />
       </div>
-      <VoteProposal />
+      <MintNFT />
     </div>
   );
 }

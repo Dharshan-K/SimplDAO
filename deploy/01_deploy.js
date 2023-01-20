@@ -33,13 +33,11 @@ module.exports = async function () {
     ABI_FILE,
     daoContractDeployed.interface.format(ethers.utils.FormatTypes.json)
   );
-  console.log("updating ADDRESS-------------");
   const chainId = network.config.chainId.toString();
   fs.writeFileSync(CONTRACT_ADDRESS_FILE, "{}");
   const currentAddresses = JSON.parse(
     fs.readFileSync(CONTRACT_ADDRESS_FILE, "utf8")
   );
-  console.log("updating ADDRESS-------------");
   if (chainId in currentAddresses) {
     if (!currentAddresses[chainId].includes(daoContractDeployed.address)) {
       currentAddresses[chainId].push(daoContractDeployed.address);
@@ -54,13 +52,11 @@ module.exports = async function () {
     NFT_ABI_FILE,
     nftContractDeployed.interface.format(ethers.utils.FormatTypes.json)
   );
-  console.log("updating ADDRESS-------------");
   //   const chainId = network.config.chainId.toString();
   fs.writeFileSync(NFT_CONTRACT_ADDRESS_FILE, "{}");
   const currentNFTAddresses = JSON.parse(
     fs.readFileSync(NFT_CONTRACT_ADDRESS_FILE, "utf8")
   );
-  console.log("updating ADDRESS-------------");
   if (chainId in currentNFTAddresses) {
     if (!currentNFTAddresses[chainId].includes(nftContractDeployed.address)) {
       currentNFTAddresses[chainId].push(nftContractDeployed.address);

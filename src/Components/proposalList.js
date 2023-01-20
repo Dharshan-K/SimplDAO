@@ -89,8 +89,9 @@ export default function ProposalList() {
                 <span>Not Excecuted</span>
               )}
             </li>
+            <li>{index}</li>
           </ul>
-          <Link>Vote</Link>
+          <Link to={`voteProposal/${index}`}>Vote</Link>
         </div>
       ))}
     </div>
