@@ -27,14 +27,17 @@ describe("voting", function () {
     console.log(
       await daoContract.voteProposal(
         0,
-        1,
+        0,
         "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512"
       )
     );
-
+    console.log("-------------------");
+    await daoContract.exceuteProposal(0);
     const proposal = await daoContract.getProposal(0);
     console.log(proposal);
+
     expect(proposalCount).to.equal(1);
+    expect(proposal.excecuted).to.equal(true);
     console.log("test completed");
   });
 });

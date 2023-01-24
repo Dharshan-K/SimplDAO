@@ -71,7 +71,7 @@ contract SimplDAO {
     }
 
     function exceuteProposal(uint _proposalId) public {
-        require(_proposalId>0, "Proposal doesn't exist");
+        require(_proposalId>=0, "Proposal doesn't exist");
         Proposal storage proposal = ProposalData[_proposalId];
         
         require(msg.sender==proposal.createdBy, "the owner only can excecute the proposal");

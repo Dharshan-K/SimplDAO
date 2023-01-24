@@ -49,13 +49,6 @@ export default function VoteProposal() {
 
   return (
     <div>
-      {/* <form method="post" onChange={eventHandler}>
-        <input type="radio" id="yes" value="yes" name="vote"></input>
-        <label>yes</label>
-        <input type="radio" id="no" value="no" name="vote"></input>
-        <label>no</label>
-        <input type="submit" id="submit"></input>
-      </form> */}
       <button onClick={eventHandler} vote="yes">
         Vote for
       </button>

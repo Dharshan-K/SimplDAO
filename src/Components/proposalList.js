@@ -8,6 +8,8 @@ import {
 import { ethers, Contract } from "ethers";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Excecute from "./excecuteProposal";
+import MintNFT from "./mintNFT";
 export default function ProposalList() {
   const [proposalList, setProposalList] = useState([]);
   const [proposalCount, setProposalCount] = useState(0);
@@ -45,6 +47,28 @@ export default function ProposalList() {
     }
   };
 
+  const voting = async () => {
+    try {
+      const { ethereum } = window;
+      const proposalArray = [];
+      console.log("reading ethereum details......");
+      let chainID = await ethereum.request({ method: "eth_chainId" });
+      chainID = parseInt(chainID);
+
+      const daoContractAddress =
+        chainID in contractAddress ? contractAddress[chainID][0] : null;
+
+      const provider = new ethers.providers.Web3Provider(ethereum);
+      const signer = await provider.getSigner();
+      const daoContract = new Contract(daoContractAddress, abi, signer);
+
+      await daoContract.excecuteProposal();
+      console.log("voting");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     // getProposals();
   });
@@ -75,23 +99,30 @@ export default function ProposalList() {
         </ul>
       </div>
       {proposalList.map((p, index) => (
-        <div className="bg-orange-600 ml-2">
+        <div className="bg-white-600 ml-2">
           <ul key={index}>
-            <li>{p.proposalTitle}</li>
-            <li>{p.proposalDescription}</li>
-            <li>{p.createdBy}</li>
-            <li>For the Proposal: {p.yesVotes.toString()}</li>
-            <li>Against the Proposal: {p.noVotes.toString()}</li>
-            <li>
+            <span>{p.proposalTitle}</span>
+            <span>{p.proposalDescription}</span>
+            <span>{p.createdBy}</span>
+            <span>For the Proposal: {p.yesVotes.toString()}</span>
+            <span>Against the Proposal: {p.noVotes.toString()}</span>
+            <span>
               {p.excecuted == true ? (
                 <span>Excecuted</span>
               ) : (
                 <span>Not Excecuted</span>
               )}
-            </li>
-            <li>{index}</li>
+            </span>
+            <span>{index}</span>
+            <span className="bg-green-400">
+              <Excecute id={index} />
+            </span>
           </ul>
-          <Link to={`voteProposal/${index}`}>Vote</Link>
+          <div>
+            <Link className="bg-green-400" to={`voteProposal/${index}`}>
+              Vote
+            </Link>
+          </div>
         </div>
       ))}
     </div>
