@@ -33,5 +33,21 @@ export default function Excecute(props) {
     }
   };
 
-  return <button onClick={voting}>Excecute</button>;
+  return (
+    <button
+      className="bg-green-400
+      hover:bg-green-700
+      text-white
+      font-bold
+      px-4
+      py-2
+      rounded
+      flex-wrap
+      max-w-28
+      hover:max-w-sm"
+      onClick={voting}
+    >
+      Excecute
+    </button>
+  );
 }

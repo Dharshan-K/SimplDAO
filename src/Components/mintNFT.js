@@ -39,7 +39,7 @@ export default function MintNFT() {
       <form method="post" onSubmit={minting}>
         <label>Enter the No. of NFTs to be Minted: </label>
         <input type="text" id="number"></input>
-        <input className="bg-green-400" type="submit" value="Mint"></input>
+        <input className="bg-green-400 " type="submit" value="Mint"></input>
       </form>
     </div>
   );

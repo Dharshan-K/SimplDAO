@@ -49,7 +49,7 @@ export default function ConnectWallet() {
 
   return (
     <div>
-      <div>
+      <div className="mx-2 my-3">
         {connected === false ? (
           <button id="connect" onClick={connectWallet}>
             Connect Wallet

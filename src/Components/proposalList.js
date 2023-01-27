@@ -13,6 +13,10 @@ import MintNFT from "./mintNFT";
 export default function ProposalList() {
   const [proposalList, setProposalList] = useState([]);
   const [proposalCount, setProposalCount] = useState(0);
+  const styles = {
+    button: `bg-white-400 text-black border border-green-400 hover:bg-green-400 hover:text-white  px-4 py-2 rounded w-40 flex-none`,
+    badge: ``,
+  };
 
   const getProposals = async () => {
     try {
@@ -75,56 +79,69 @@ export default function ProposalList() {
 
   return (
     <div>
-      <div className="flex flex-row">
-        <ul className="mr-6">
-          <span className="bg-green-400 text-white font-bold  px-3 py-2 rounded">
-            Total No. of Proposals: {proposalCount}
-          </span>
-        </ul>
-        <ul className="mr-6">
-          <Link
-            className="bg-green-400 hover:bg-green-500 text-white font-bold rounded px-4 py-2"
-            to={`createProposal`}
-          >
+      <div className="grid grid-cols-3 max-w-96">
+        <div className="bg-green-400 text-white font-bold px-3 py-2 rounded mr-6 w-40 flex-none">
+          <span className="">Total Proposals: {proposalCount}</span>
+        </div>
+        <div className={styles.button}>
+          <Link className="w-30" to={`createProposal`}>
             Create Proposal
           </Link>
-        </ul>
-        <ul className="mr-6">
-          <button
-            className="bg-green-400 hover:bg-green-700 text-white font-bold px-4 py-2 rounded"
-            onClick={getProposals}
-          >
+        </div>
+        <div className="mr-6">
+          <button className={styles.button} onClick={getProposals}>
             Refresh
           </button>
-        </ul>
-      </div>
-      {proposalList.map((p, index) => (
-        <div className="bg-white-600 ml-2">
-          <ul key={index}>
-            <span>{p.proposalTitle}</span>
-            <span>{p.proposalDescription}</span>
-            <span>{p.createdBy}</span>
-            <span>For the Proposal: {p.yesVotes.toString()}</span>
-            <span>Against the Proposal: {p.noVotes.toString()}</span>
-            <span>
-              {p.excecuted == true ? (
-                <span>Excecuted</span>
-              ) : (
-                <span>Not Excecuted</span>
-              )}
-            </span>
-            <span>{index}</span>
-            <span className="bg-green-400">
-              <Excecute id={index} />
-            </span>
-          </ul>
-          <div>
-            <Link className="bg-green-400" to={`voteProposal/${index}`}>
-              Vote
-            </Link>
-          </div>
         </div>
-      ))}
+      </div>
+      <div className="grid grid-cols-3 mt-10 w-300">
+        {proposalList.map((p, index) => (
+          <div className="">
+            <div key={index} className="bg-white-600 ml-2 flex flex-col">
+              <span></span>
+              <span className="flex-wrap">
+                <span className="font-bold">Title: </span> {p.proposalTitle}
+              </span>
+
+              <span className="flex-wrap">
+                <span className="font-bold">Description : </span>
+                {p.proposalDescription}
+              </span>
+
+              <span className="flex-wrap text-sm">
+                <span className="font-bold">Owner : </span>
+                {p.createdBy}
+              </span>
+              <span className="flex-wrap">
+                <span className="font-bold">For the Proposal:</span>{" "}
+                {p.yesVotes.toString()}
+              </span>
+              <span className="flex-wrap">
+                <span className="font-bold">Against the Proposal: </span>{" "}
+                {p.noVotes.toString()}
+              </span>
+              <span className="flex-wrap">
+                <span className="font-bold">Status: </span>
+                {p.excecuted == true ? (
+                  <span>Excecuted</span>
+                ) : (
+                  <span>Not Excecuted</span>
+                )}
+              </span>
+            </div>
+            <div className="grid grid-cols-4 gap-4 mt-5 ml-5">
+              <div className="col-start-1 col-end-3">
+                <Excecute id={index} />
+              </div>
+              <br></br>
+              <div className="bg-green-400 hover:bg-green-700 text-white font-bold px-4 py-2 rounded flex-wrap w-15 col-end-7 col-span-2 mr-10">
+                <Link to={`voteProposal/${index}`}>Vote</Link>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <br></br>
     </div>
   );
 }
