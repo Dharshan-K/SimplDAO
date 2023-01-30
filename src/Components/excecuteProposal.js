@@ -1,20 +1,12 @@
 /** @format */
 
-import {
-  contractAddress,
-  abi,
-  NFTcontractAddress,
-  NFT_ABI,
-} from "../constants/index";
+import { contractAddress, abi } from "../constants/index";
 import { ethers, Contract } from "ethers";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 
 export default function Excecute(props) {
   const voting = async () => {
     try {
       const { ethereum } = window;
-      const proposalArray = [];
       console.log("reading ethereum details......");
       let chainID = await ethereum.request({ method: "eth_chainId" });
       chainID = parseInt(chainID);
@@ -35,9 +27,12 @@ export default function Excecute(props) {
 
   return (
     <button
-      className="bg-green-400
-      hover:bg-green-700
-      text-white
+      className="bg-white-400
+      hover:bg-green-400
+      border
+      border-green-400
+      hover: text-white
+      text-black
       font-bold
       px-4
       py-2

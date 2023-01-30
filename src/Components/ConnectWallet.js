@@ -1,9 +1,6 @@
 /** @format */
 
-import { ethers } from "ethers";
 import { useState, useEffect } from "react";
-
-// import { abi, nftABI, contractAddress, NFTcontractAddress } from "../constants";
 
 export default function ConnectWallet() {
   const [correctNetwork, setCorrectNetwork] = useState(false);
@@ -42,14 +39,9 @@ export default function ConnectWallet() {
     }
   };
 
-  // useEffect(() => {
-  //   document.getElementById("connect").innerHTML = "connected";
-  //   setConnected(true);
-  // }, [connected]);
-
   return (
     <div>
-      <div className="mx-2 my-3">
+      <div className="bg-white-400 text-black border border-green-400 hover:text-white hover:bg-green-400 px-3 py-1 rounded">
         {connected === false ? (
           <button id="connect" onClick={connectWallet}>
             Connect Wallet
@@ -58,8 +50,6 @@ export default function ConnectWallet() {
           <p>Connected</p>
         )}
       </div>
-      {/* <h1>Hello world</h1>
-      <button onClick={connectWallet}>Connect Wallet</button> */}
     </div>
   );
 }

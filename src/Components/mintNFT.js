@@ -1,11 +1,6 @@
 /** @format */
 
-import {
-  contractAddress,
-  abi,
-  NFTcontractAddress,
-  NFT_ABI,
-} from "../constants/index";
+import { NFTcontractAddress, NFT_ABI } from "../constants/index";
 import { Contract, ethers } from "ethers";
 
 export default function MintNFT() {
@@ -25,7 +20,6 @@ export default function MintNFT() {
       const provider = new ethers.providers.Web3Provider(ethereum);
       const signer = await provider.getSigner();
       const daoContract = new Contract(daoContractAddress, NFT_ABI, signer);
-      //   await daoContract.createProposal("Proposal 1", "This is proposal 1");
       console.log("minting tokens ..........");
       await daoContract.mint(mintCount);
       console.log("tokens minted successfully..........");
@@ -38,8 +32,16 @@ export default function MintNFT() {
     <div>
       <form method="post" onSubmit={minting}>
         <label>Enter the No. of NFTs to be Minted: </label>
-        <input type="text" id="number"></input>
-        <input className="bg-green-400 " type="submit" value="Mint"></input>
+        <input
+          className="border border-black mr-5"
+          type="text"
+          id="number"
+        ></input>
+        <input
+          className="bg-white-400 text-black border border-green-400 hover:text-white hover:bg-green-400 px-3 py-1 rounded"
+          type="submit"
+          value="Mint"
+        ></input>
       </form>
     </div>
   );

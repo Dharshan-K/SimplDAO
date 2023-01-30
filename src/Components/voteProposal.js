@@ -1,10 +1,5 @@
 /** @format */
-import {
-  contractAddress,
-  abi,
-  NFTcontractAddress,
-  NFT_ABI,
-} from "../constants/index";
+import { contractAddress, abi, NFTcontractAddress } from "../constants/index";
 import { ethers, Contract } from "ethers";
 import { useParams } from "react-router-dom";
 

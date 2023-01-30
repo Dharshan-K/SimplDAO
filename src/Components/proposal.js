@@ -1,11 +1,6 @@
 /** @format */
 
-import {
-  contractAddress,
-  abi,
-  NFTcontractAddress,
-  NFT_ABI,
-} from "../constants/index";
+import { contractAddress, abi } from "../constants/index";
 import { ethers, Contract } from "ethers";
 
 export default function CreateProposal() {
