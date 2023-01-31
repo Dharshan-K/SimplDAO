@@ -1,6 +1,6 @@
 /** @format */
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function ConnectWallet() {
   const [correctNetwork, setCorrectNetwork] = useState(false);
@@ -16,6 +16,7 @@ export default function ConnectWallet() {
       }
       let chainId = await ethereum.request({ method: "eth_chainId" });
       console.log("connected to chain:" + parseInt(chainId));
+      console.log(correctNetwork, currentAccount);
 
       const goerliId = "0x5";
       if (chainId !== goerliId) {
@@ -41,7 +42,7 @@ export default function ConnectWallet() {
 
   return (
     <div>
-      <div className="bg-white-400 text-black border border-green-400 hover:text-white hover:bg-green-400 px-3 py-1 rounded">
+      <div className="bg-white-400 text-black border border-green-400 hover:text-white hover:bg-green-400 mt-5 mb-5 ml-5 w-24 px-2 py-1 rounded">
         {connected === false ? (
           <button id="connect" onClick={connectWallet}>
             Connect Wallet

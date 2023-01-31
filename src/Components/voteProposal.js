@@ -10,15 +10,14 @@ export default function VoteProposal() {
     event.preventDefault();
     let value = event.target.getAttribute("vote");
     console.log("voting started for", proposalId.id);
-    if (value == "yes") {
+    if (value === "yes") {
       console.log("it is yes");
       voteChoice = 0;
-    } else if (value == "no") {
+    } else if (value === "no") {
       console.log("it is no");
       voteChoice = 1;
     }
 
-    console.log("final" + " " + voteChoice);
     await voting();
     console.log("polling completed");
   };
@@ -32,7 +31,6 @@ export default function VoteProposal() {
       const signer = provider.getSigner();
       console.log(votingAddress);
       const votingContract = new Contract(votingAddress, abi, signer);
-      console.log("Inside vote process" + " " + voteChoice);
       await votingContract.voteProposal(
         proposalId.id,
         voteChoice,

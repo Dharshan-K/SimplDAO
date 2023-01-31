@@ -86,7 +86,7 @@ export default function ProposalList() {
               </span>
               <span className="flex-wrap">
                 <span className="font-bold">Status: </span>
-                {p.excecuted == true ? (
+                {p.excecuted === true ? (
                   <span>Excecuted</span>
                 ) : (
                   <span>Not Excecuted</span>

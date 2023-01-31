@@ -3,8 +3,6 @@
 import "../assets/main.css";
 import ConnectWallet from "./ConnectWallet";
 import ProposalList from "./proposalList";
-import { Link } from "react-router-dom";
-import VoteProposal from "./voteProposal";
 import MintNFT from "./mintNFT";
 
 function App() {
