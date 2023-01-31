@@ -100,11 +100,12 @@ export default function ProposalList() {
               <br></br>
               <div
                 className="bg-white-400
-                text-black
+                text-black-400
       hover:bg-green-400
+      hover: text-white-400
       border
       border-green-400
-      hover: text-white
+      
       
       font-bold
       px-4

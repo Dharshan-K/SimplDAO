@@ -28,11 +28,11 @@ export default function Excecute(props) {
   return (
     <button
       className="bg-white-400
-      text-black
+      text-black-400
       hover:bg-green-400
       border
       border-green-400
-      hover: text-white
+      hover: text-white-400
       
       font-bold
       px-4
